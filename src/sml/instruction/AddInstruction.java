@@ -22,6 +22,14 @@ public class AddInstruction extends Instruction {
 		this.source = source;
 	}
 
+	protected RegisterName getResult() {
+		return this.result;
+	}
+
+	protected RegisterName getSource() {
+		return source;
+	}
+
 	@Override
 	public int execute(Machine m) {
 		int value1 = m.getRegisters().get(result);
@@ -33,5 +41,28 @@ public class AddInstruction extends Instruction {
 	@Override
 	public String toString() {
 		return getLabelString() + getOpcode() + " " + result + " " + source;
+	}
+
+
+	@Override
+	public final boolean equals(Object o){
+		if (o == this){
+			return true;
+		}
+		else if (o instanceof AddInstruction other){
+
+			if (other.getLabel().equals(this.getLabel())
+				&& other.getOpcode().equals(this.getOpcode())
+				&& other.getResult().equals((this.getResult()))
+				&& other.getSource().equals((this.getResult()))) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public final int hashCode(){
+		return 1;
 	}
 }
