@@ -9,8 +9,8 @@ import sml.Instruction;
 import sml.Machine;
 import sml.Registers;
 
-import static sml.Registers.Register.EAX;
-import static sml.Registers.Register.EBX;
+import static sml.Registers.Register.*;
+import static sml.Registers.Register.ECX;
 
 public class MulInstructionTest {
     private Machine machine;
@@ -45,5 +45,43 @@ public class MulInstructionTest {
         Instruction instruction = new MulInstruction(null, EAX, EBX);
         instruction.execute(machine);
         Assertions.assertEquals(-30, machine.getRegisters().get(EAX));
+    }
+
+    @Test
+    void executeValidThree() {
+        registers.set(EAX, -5);
+        registers.set(EBX, 6);
+        Instruction instruction1 = new MulInstruction(null, EAX, EBX);
+        Instruction instruction2 = new MulInstruction(null, EAX, EBX);
+        Assertions.assertEquals(instruction1, instruction2);
+    }
+
+    @Test
+    void executeValidFour(){
+        registers.set(EAX, -5);
+        registers.set(EBX, 6);
+        Instruction instruction1 = new MulInstruction(null, EAX, EBX);
+        Instruction instruction2 = new MulInstruction(null, EAX, EBX);
+        Assertions.assertEquals(instruction1.hashCode(), instruction2.hashCode());
+    }
+
+    @Test
+    void executeValidFive(){
+        registers.set(EAX, -5);
+        registers.set(EBX, 6);
+        registers.set(ECX, 4);
+        Instruction instruction1 = new MulInstruction(null, EAX, EBX);
+        Instruction instruction2 = new MulInstruction(null, EAX, ECX);
+        Assertions.assertNotEquals(instruction1.hashCode(), instruction2.hashCode());
+    }
+
+    @Test
+    void executeValidSix(){
+        registers.set(EAX, -5);
+        registers.set(EBX, 6);
+        registers.set(ECX, 4);
+        Instruction instruction1 = new MulInstruction(null, EAX, EBX);
+        Instruction instruction2 = new MulInstruction(null, EAX, ECX);
+        Assertions.assertNotEquals(instruction1, instruction2);
     }
 }

@@ -29,7 +29,7 @@ public class AddInstruction extends Instruction {
 	}
 
 	protected RegisterName getSource() {
-		return source;
+		return this.source;
 	}
 
 	@Override
