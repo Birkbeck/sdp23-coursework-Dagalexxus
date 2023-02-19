@@ -45,4 +45,42 @@ class AddInstructionTest {
     instruction.execute(machine);
     Assertions.assertEquals(1, machine.getRegisters().get(EAX));
   }
+
+  @Test
+  void executeValidThree() {
+    registers.set(EAX, -5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new AddInstruction(null, EAX, EBX);
+    Instruction instruction2 = new AddInstruction(null, EAX, EBX);
+    Assertions.assertEquals(instruction1, instruction2);
+  }
+
+  @Test
+  void executeValidFour(){
+    registers.set(EAX, -5);
+    registers.set(EBX, 6);
+    Instruction instruction1 = new AddInstruction(null, EAX, EBX);
+    Instruction instruction2 = new AddInstruction(null, EAX, EBX);
+    Assertions.assertEquals(instruction1.hashCode(), instruction2.hashCode());
+  }
+
+  @Test
+  void executeValidFive(){
+    registers.set(EAX, -5);
+    registers.set(EBX, 6);
+    registers.set(ECX, 4);
+    Instruction instruction1 = new AddInstruction(null, EAX, EBX);
+    Instruction instruction2 = new AddInstruction(null, EAX, ECX);
+    Assertions.assertNotEquals(instruction1.hashCode(), instruction2.hashCode());
+  }
+
+  @Test
+  void executeValidSix(){
+    registers.set(EAX, -5);
+    registers.set(EBX, 6);
+    registers.set(ECX, 4);
+    Instruction instruction1 = new AddInstruction(null, EAX, EBX);
+    Instruction instruction2 = new AddInstruction(null, EAX, ECX);
+    Assertions.assertNotEquals(instruction1, instruction2);
+  }
 }

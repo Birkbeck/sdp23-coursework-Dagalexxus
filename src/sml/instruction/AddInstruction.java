@@ -4,6 +4,8 @@ import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
 
+import java.util.Objects;
+
 // TODO: write a JavaDoc for the class
 
 /**
@@ -50,19 +52,16 @@ public class AddInstruction extends Instruction {
 			return true;
 		}
 		else if (o instanceof AddInstruction other){
-
-			if (other.getLabel().equals(this.getLabel())
-				&& other.getOpcode().equals(this.getOpcode())
-				&& other.getResult().equals((this.getResult()))
-				&& other.getSource().equals((this.getResult()))) {
-				return true;
-			}
+			return (Objects.equals(this.getResult(), other.getResult())
+			&& Objects.equals(this.getSource(), other.getSource())
+			&& Objects.equals(this.getLabel(), other.getLabel())
+			&& Objects.equals(this.getOpcode(), other.getOpcode()));
 		}
 		return false;
 	}
 
 	@Override
 	public final int hashCode(){
-		return 1;
+		return Objects.hash(this.result, this.source, this.label, this.opcode);
 	}
 }
