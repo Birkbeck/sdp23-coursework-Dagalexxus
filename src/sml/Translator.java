@@ -61,7 +61,7 @@ public final class Translator {
      * The input line should consist of a single SML instruction,
      * with its label already removed.
      */
-    private Instruction getInstruction(String label) {
+    private Instruction getInstruction(String label) throws NumberFormatException {
         if (line.isEmpty())
             return null;
 
@@ -74,6 +74,45 @@ public final class Translator {
             }
 
             // TODO: add code for all other types of instructions
+            case SubInstruction.OP_CODE ->  {
+                String r = scan();
+                String s = scan();
+                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
+            }
+
+            case MulInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
+            }
+
+            case DivInstruction.OP_CODE -> {
+                String r = scan();
+                String s = scan();
+                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
+            }
+
+            case MovInstruction.OP_CODE -> {
+                String r = scan();
+                int val;
+                try {
+                    val = Integer.parseInt(scan());
+                    return new MovInstruction(label, Register.valueOf(r), val);
+                } catch (NumberFormatException e) {
+                    throw new NumberFormatException("MovInstruction requires an integer value as second argument.");
+                }
+            }
+
+            case OutInstruction.OP_CODE ->{
+                    String s = scan();
+                    return new OutInstruction(label, Register.valueOf(s));
+            }
+
+            case JnzInstruction.OP_CODE -> {
+                String s = scan();
+                String jumpTo = scan();
+                return new JnzInstruction(label, Register.valueOf(s), jumpTo);
+            }
 
             // TODO: Then, replace the switch by using the Reflection API
 
