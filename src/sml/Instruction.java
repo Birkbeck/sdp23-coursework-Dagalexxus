@@ -50,6 +50,8 @@ public abstract class Instruction {
 
 	// TODO: What does abstract in the declaration below mean?
 	//       (Write a short explanation.)
+	// Abstract methods will have to be implemented by the classes that inherit from this class unless the class that
+	// is inheriting from the abstract class is also declared abstract.
 	@Override
 	public abstract String toString();
 
