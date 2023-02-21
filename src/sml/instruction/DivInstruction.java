@@ -1,8 +1,9 @@
 package sml.instruction;
 
-import sml.Instruction;
+import sml.ArithmeticInstruction;
 import sml.Machine;
 import sml.RegisterName;
+import sml.Registers;
 
 import java.util.Objects;
 
@@ -12,39 +13,23 @@ import java.util.Objects;
  * @author
  */
 
-public class DivInstruction extends Instruction {
-    private final RegisterName result;
-    private final RegisterName source;
-
+public class DivInstruction extends ArithmeticInstruction {
     public static final String OP_CODE = "div";
 
     public DivInstruction(String label, RegisterName result, RegisterName source) {
-        super(label, OP_CODE);
-        this.result = result;
-        this.source = source;
-    }
-
-    protected RegisterName getResult() {
-        return this.result;
-    }
-
-    protected RegisterName getSource() {
-        return this.source;
+        super(label, OP_CODE, result, source);
     }
 
     @Override
-    public int execute(Machine m) {
+    public int execute(Machine m) throws ArithmeticException {
         int value1 = m.getRegisters().get(result);
         int value2 = m.getRegisters().get(source);
+        if (value2 == 0){
+            throw new ArithmeticException("Division by zero!");
+        }
         m.getRegisters().set(result, value1 / value2);
         return NORMAL_PROGRAM_COUNTER_UPDATE;
     }
-
-    @Override
-    public String toString() {
-        return getLabelString() + getOpcode() + " " + result + " " + source;
-    }
-
 
     @Override
     public final boolean equals(Object o){
@@ -58,10 +43,5 @@ public class DivInstruction extends Instruction {
                     && Objects.equals(this.getOpcode(), other.getOpcode()));
         }
         return false;
-    }
-
-    @Override
-    public final int hashCode(){
-        return Objects.hash(this.result, this.source, this.label, this.opcode);
     }
 }

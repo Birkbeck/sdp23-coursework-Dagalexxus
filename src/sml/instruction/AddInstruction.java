@@ -1,6 +1,6 @@
 package sml.instruction;
 
-import sml.Instruction;
+import sml.ArithmeticInstruction;
 import sml.Machine;
 import sml.RegisterName;
 
@@ -12,39 +12,21 @@ import java.util.Objects;
  * @author
  */
 
-public class AddInstruction extends Instruction {
-	private final RegisterName result;
-	private final RegisterName source;
-
+public class AddInstruction extends ArithmeticInstruction {
 	public static final String OP_CODE = "add";
 
 	public AddInstruction(String label, RegisterName result, RegisterName source) {
-		super(label, OP_CODE);
-		this.result = result;
-		this.source = source;
+		super(label, OP_CODE, result, source);
 	}
 
-	protected RegisterName getResult() {
-		return this.result;
-	}
-
-	protected RegisterName getSource() {
-		return this.source;
-	}
 
 	@Override
 	public int execute(Machine m) {
-		int value1 = m.getRegisters().get(result);
-		int value2 = m.getRegisters().get(source);
-		m.getRegisters().set(result, value1 + value2);
+		int value1 = m.getRegisters().get(this.result);
+		int value2 = m.getRegisters().get(this.source);
+		m.getRegisters().set(this.getResult(), value1 + value2);
 		return NORMAL_PROGRAM_COUNTER_UPDATE;
 	}
-
-	@Override
-	public String toString() {
-		return getLabelString() + getOpcode() + " " + result + " " + source;
-	}
-
 
 	@Override
 	public final boolean equals(Object o){
@@ -60,8 +42,4 @@ public class AddInstruction extends Instruction {
 		return false;
 	}
 
-	@Override
-	public final int hashCode(){
-		return Objects.hash(this.result, this.source, this.label, this.opcode);
-	}
 }

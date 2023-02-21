@@ -1,6 +1,6 @@
 package sml.instruction;
 
-import sml.Instruction;
+import sml.ArithmeticInstruction;
 import sml.Machine;
 import sml.RegisterName;
 import sml.Registers;
@@ -13,16 +13,11 @@ import java.util.Objects;
  * @author
  */
 
-public class MulInstruction extends Instruction {
-    private final RegisterName result;
-    private final RegisterName source;
-
+public class MulInstruction extends ArithmeticInstruction {
     public static final String OP_CODE = "mul";
 
     public MulInstruction(String label, RegisterName result, RegisterName source) {
-        super(label, OP_CODE);
-        this.result = result;
-        this.source = source;
+        super(label, OP_CODE, result, source);
     }
 
     @Override
@@ -31,19 +26,6 @@ public class MulInstruction extends Instruction {
         int value2 = m.getRegisters().get(source);
         m.getRegisters().set(result, value1 * value2);
         return NORMAL_PROGRAM_COUNTER_UPDATE;
-    }
-
-    public RegisterName getResult(){
-        return this.result;
-    }
-
-    public RegisterName getSource(){
-        return this.source;
-    }
-
-    @Override
-    public String toString() {
-        return getLabelString() + getOpcode() + " " + result + " " + source;
     }
 
     @Override
@@ -60,9 +42,5 @@ public class MulInstruction extends Instruction {
         return false;
     }
 
-    @Override
-    public final int hashCode(){
-        return Objects.hash(this.result, this.source, this.label, this.opcode);
-    }
 }
 

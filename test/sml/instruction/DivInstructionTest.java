@@ -93,4 +93,11 @@ class DivInstructionTest {
         Assertions.assertEquals(0, machine.getRegisters().get(EAX));
 
     }
+
+    @Test
+    void executeValidEight(){
+        registers.set(EAX,5);
+        Instruction instruction = new DivInstruction(null, EAX, EBX);
+        Assertions.assertThrows(ArithmeticException.class, () -> instruction.execute(machine), "Division by zero!");
+    }
 }
