@@ -16,7 +16,10 @@ public class SubInstruction extends ArithmeticInstruction {
 
     public SubInstruction(String label, RegisterName result, RegisterName source) {
         super(label, OP_CODE, result, source);
+    }
 
+    public SubInstruction(String label, String result, String source) {
+        super(label, OP_CODE, result, source);
     }
 
     @Override

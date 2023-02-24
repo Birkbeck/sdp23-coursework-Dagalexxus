@@ -19,6 +19,10 @@ public class AddInstruction extends ArithmeticInstruction {
 		super(label, OP_CODE, result, source);
 	}
 
+	public AddInstruction(String label, String result, String source){
+		super(label, OP_CODE, result, source);
+	}
+
 
 	@Override
 	public int execute(Machine m) {

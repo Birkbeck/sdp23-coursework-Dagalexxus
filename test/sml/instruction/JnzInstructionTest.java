@@ -32,9 +32,9 @@ public class JnzInstructionTest {
         var program = machine.getProgram();
         var labels = machine.getLabels();
 
-        program.add(new MovInstruction(null, EAX, 6));
-        program.add(new MovInstruction(null, EBX, 1));
-        program.add(new MovInstruction(null, ECX, 1));
+        program.add(new MovInstruction(null, "EAX", "6"));
+        program.add(new MovInstruction(null, "EBX", "1"));
+        program.add(new MovInstruction(null, "ECX", "1"));
         program.add(new MulInstruction("f3", EBX, EAX));
         labels.addLabel("f3", 3);
         program.add(new SubInstruction(null, EAX, ECX));

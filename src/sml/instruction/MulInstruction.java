@@ -20,6 +20,10 @@ public class MulInstruction extends ArithmeticInstruction {
         super(label, OP_CODE, result, source);
     }
 
+    public MulInstruction(String label, String result, String source) {
+        super(label, OP_CODE, result, source);
+    }
+
     @Override
     public int execute(Machine m) {
         int value1 = m.getRegisters().get(result);

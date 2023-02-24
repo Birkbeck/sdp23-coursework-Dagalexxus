@@ -5,10 +5,11 @@ import sml.instruction.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.lang.reflect.*;
 
 import static sml.Registers.Register;
+
 
 /**
  * This class ....
@@ -66,63 +67,84 @@ public final class Translator {
             return null;
 
         String opcode = scan();
-        switch (opcode) {
-            case AddInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
+//        switch (opcode) {
+//            case AddInstruction.OP_CODE -> {
+//                String r = scan();
+//                String s = scan();
+//                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
+//            }
 
             // TODO: add code for all other types of instructions
-            case SubInstruction.OP_CODE ->  {
-                String r = scan();
-                String s = scan();
-                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-
-            case MulInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-
-            case DivInstruction.OP_CODE -> {
-                String r = scan();
-                String s = scan();
-                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
-            }
-
-            case MovInstruction.OP_CODE -> {
-                String r = scan();
-                int val;
-                try {
-                    val = Integer.parseInt(scan());
-                    return new MovInstruction(label, Register.valueOf(r), val);
-                } catch (NumberFormatException e) {
-                    throw new NumberFormatException("MovInstruction requires an integer value as second argument.");
-                }
-            }
-
-            case OutInstruction.OP_CODE ->{
-                    String s = scan();
-                    return new OutInstruction(label, Register.valueOf(s));
-            }
-
-            case JnzInstruction.OP_CODE -> {
-                String s = scan();
-                String jumpTo = scan();
-                return new JnzInstruction(label, Register.valueOf(s), jumpTo);
-            }
+//            case SubInstruction.OP_CODE ->  {
+//                String r = scan();
+//                String s = scan();
+//                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
+//            }
+//
+//            case MulInstruction.OP_CODE -> {
+//                String r = scan();
+//                String s = scan();
+//                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
+//            }
+//
+//            case DivInstruction.OP_CODE -> {
+//                String r = scan();
+//                String s = scan();
+//                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
+//            }
+//
+//            case MovInstruction.OP_CODE -> {
+//                String r = scan();
+//                int val;
+//                try {
+//                    val = Integer.parseInt(scan());
+//                    return new MovInstruction(label, Register.valueOf(r), val);
+//                } catch (NumberFormatException e) {
+//                    throw new NumberFormatException("MovInstruction requires an integer value as second argument.");
+//                }
+//            }
+//
+//            case OutInstruction.OP_CODE ->{
+//                    String s = scan();
+//                    return new OutInstruction(label, Register.valueOf(s));
+//            }
+//
+//            case JnzInstruction.OP_CODE -> {
+//                String s = scan();
+//                String jumpTo = scan();
+//                return new JnzInstruction(label, Register.valueOf(s), jumpTo);
+//            }
 
             // TODO: Then, replace the switch by using the Reflection API
+            String className = "sml.instruction." + opcode.substring(0,1).toUpperCase() +opcode.substring(1) + "Instruction";
+
+            try {
+                Constructor<?>[] constructor = Class.forName(className).getDeclaredConstructors();
+                List<String> parameters = new ArrayList<>();
+                parameters.add(label);
+                for (int n = 0; n < constructor[1].getParameterCount() - 1; n++){
+                    String parameter = scan();
+                    parameters.add(parameter);
+                }
+                Constructor<?> constructor1 = constructor[1];
+                return (Instruction) constructor1.newInstance(parameters.toArray());
+            }
+            catch (ClassNotFoundException e){
+                System.out.println(e);
+            }
+            catch (Exception e){
+                System.out.println(e);
+            }
+
+
 
             // TODO: Next, use dependency injection to allow this machine class
             //       to work with different sets of opcodes (different CPUs)
 
-            default -> {
-                System.out.println("Unknown instruction: " + opcode);
-            }
-        }
+//            default -> {
+//                System.out.println("Unknown instruction: " + opcode);
+//            }
+//        }
         return null;
     }
 

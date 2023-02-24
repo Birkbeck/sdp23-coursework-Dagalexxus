@@ -12,6 +12,12 @@ public abstract class ArithmeticInstruction extends Instruction {
         this.result = result;
     }
 
+    public ArithmeticInstruction(String label, String opcode, String result, String source) {
+        super(label, opcode);
+        this.result = Registers.Register.valueOf(result);
+        this.source = Registers.Register.valueOf(source);
+    }
+
     protected RegisterName getResult() {
         return this.result;
     }

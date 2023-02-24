@@ -3,6 +3,7 @@ package sml.instruction;
 import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
+import sml.Registers;
 
 import java.util.Objects;
 
@@ -22,6 +23,12 @@ public class MovInstruction extends Instruction {
         super(label, OP_CODE);
         this.result = result;
         this.value = value;
+    }
+
+    public MovInstruction(String label, String result, String value){
+        super(label, OP_CODE);
+        this.result = Registers.Register.valueOf(result);
+        this.value = Integer.parseInt(value);
     }
 
     public RegisterName getResult() {

@@ -3,7 +3,6 @@ package sml.instruction;
 import sml.ArithmeticInstruction;
 import sml.Machine;
 import sml.RegisterName;
-import sml.Registers;
 
 import java.util.Objects;
 
@@ -17,6 +16,10 @@ public class DivInstruction extends ArithmeticInstruction {
     public static final String OP_CODE = "div";
 
     public DivInstruction(String label, RegisterName result, RegisterName source) {
+        super(label, OP_CODE, result, source);
+    }
+
+    public DivInstruction(String label, String result, String source){
         super(label, OP_CODE, result, source);
     }
 
