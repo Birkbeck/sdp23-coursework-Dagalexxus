@@ -2,6 +2,10 @@ package sml;
 
 import sml.instruction.*;
 
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -67,6 +71,7 @@ public final class Translator {
             return null;
 
         String opcode = scan();
+
 //        switch (opcode) {
 //            case AddInstruction.OP_CODE -> {
 //                String r = scan();
@@ -116,36 +121,48 @@ public final class Translator {
 //            }
 
             // TODO: Then, replace the switch by using the Reflection API
-            String className = "sml.instruction." + opcode.substring(0,1).toUpperCase() +opcode.substring(1) + "Instruction";
-
-            try {
-                Constructor<?>[] constructor = Class.forName(className).getDeclaredConstructors();
-                List<String> parameters = new ArrayList<>();
-                parameters.add(label);
-                for (int n = 0; n < constructor[1].getParameterCount() - 1; n++){
-                    String parameter = scan();
-                    parameters.add(parameter);
-                }
-                Constructor<?> constructor1 = constructor[1];
-                return (Instruction) constructor1.newInstance(parameters.toArray());
-            }
-            catch (ClassNotFoundException e){
-                System.out.println(e);
-            }
-            catch (Exception e){
-                System.out.println(e);
-            }
+//            String className = "sml.instruction." + opcode.substring(0,1).toUpperCase() +opcode.substring(1) + "Instruction";
+//
+//            try {
+//                Constructor<?>[] constructor = Class.forName(className).getDeclaredConstructors();
+//                List<String> parameters = new ArrayList<>();
+//                parameters.add(label);
+//                for (int n = 0; n < constructor[1].getParameterCount() - 1; n++){
+//                    String parameter = scan();
+//                    parameters.add(parameter);
+//                }
+//                Constructor<?> constructor1 = constructor[1];
+//                return (Instruction) constructor1.newInstance(parameters.toArray());
+//            }
+//            catch (ClassNotFoundException e){
+//                System.out.println(e);
+//            }
+//            catch (Exception e){
+//                System.out.println(e);
+//            }
 
 
 
             // TODO: Next, use dependency injection to allow this machine class
             //       to work with different sets of opcodes (different CPUs)
+            // get BeanFactory
+            var factory = new ClassPathXmlApplicationContext("/beans.xml");
+            List<String> parameters = new ArrayList<>();
+            parameters.add(label);
+            while (!line.isEmpty()){
+                parameters.add(scan());
+                if (!Character.isWhitespace(line.charAt(0))){
+                    line = "";
+                }
+            }
+
+            return (Instruction) factory.getBean(opcode, parameters.toArray());
 
 //            default -> {
 //                System.out.println("Unknown instruction: " + opcode);
 //            }
 //        }
-        return null;
+//        return null;
     }
 
 
