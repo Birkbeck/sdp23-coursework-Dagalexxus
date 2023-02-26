@@ -118,29 +118,14 @@ public final class Translator {
 
             try {
                 Constructor<?>[] constructors = Class.forName(className).getDeclaredConstructors();
-                List<Object> parameters = new ArrayList<>();
+                List<String> parameters = new ArrayList<>();
                 parameters.add(label);
-                Class<?>[] parameterTypes = constructors[0].getParameterTypes();
-
                 for (int n = 1; n < constructors[0].getParameterCount(); n++){
-                    String parameter = scan();
-                    boolean isNotNumber = parameter
-                            .chars()
-                            .mapToObj(i -> (char) i)
-                            .anyMatch(i -> !Character.isDigit(i));
-
-                    if (parameterTypes[n].getName().equals("sml.RegisterName")){
-                        parameters.add(Registers.Register.valueOf(parameter));
-                    }
-                    else if (!isNotNumber){
-                        parameters.add(Integer.parseInt(parameter));
-                    }
-                    else{
-                        parameters.add(parameter);
-                    }
+                    String argument = scan();
+                    parameters.add(argument);
                 }
-
-                return (Instruction) constructors[0].newInstance(parameters.toArray());
+                ReflectionInstructionFactory factory = ReflectionInstructionFactory.getFactory();
+                return factory.createInstruction(className, parameters);
             }
             catch (ClassNotFoundException e){
                 System.out.println(e);
