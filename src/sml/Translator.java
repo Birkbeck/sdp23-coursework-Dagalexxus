@@ -1,6 +1,8 @@
 package sml;
 
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -114,7 +116,7 @@ public final class Translator {
 //            }
 
             // TODO: Then, replace the switch by using the Reflection API
-            String className = "sml.instruction." + opcode.substring(0,1).toUpperCase() +opcode.substring(1) + "Instruction";
+            /*String className = "sml.instruction." + opcode.substring(0,1).toUpperCase() +opcode.substring(1) + "Instruction";
 
             try {
                 Constructor<?>[] constructors = Class.forName(className).getDeclaredConstructors();
@@ -132,30 +134,29 @@ public final class Translator {
             }
             catch (Exception e){
                 System.out.println(e);
-            }
+            }*/
 
 
 
             // TODO: Next, use dependency injection to allow this machine class
             //       to work with different sets of opcodes (different CPUs)
             // get BeanFactory
-//            var factory = new ClassPathXmlApplicationContext("/beans.xml");
-//            List<String> parameters = new ArrayList<>();
-//            parameters.add(label);
-//            while (!line.isEmpty()){
-//                parameters.add(scan());
-//                if (!Character.isWhitespace(line.charAt(0))){
-//                    line = "";
-//                }
-//            }
-//
-//            return (Instruction) factory.getBean(opcode, parameters.toArray());
+            var factory = new ClassPathXmlApplicationContext("/beans.xml");
+            List<String> parameters = new ArrayList<>();
+            parameters.add(label);
+            while (!line.isEmpty()){
+                parameters.add(scan());
+                if (!Character.isWhitespace(line.charAt(0))){
+                    line = "";
+                }
+            }
+
+            return (Instruction) factory.getBean(opcode, parameters.toArray());
 
 //            default -> {
 //                System.out.println("Unknown instruction: " + opcode);
 //            }
 //        }
-        return null;
     }
 
 
