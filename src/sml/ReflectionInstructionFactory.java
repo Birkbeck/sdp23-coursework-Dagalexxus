@@ -3,7 +3,7 @@ package sml;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
-public class ReflectionInstructionFactory {
+public class ReflectionInstructionFactory implements InstructionFactory {
 
     private static ReflectionInstructionFactory factory;
 
@@ -17,8 +17,10 @@ public class ReflectionInstructionFactory {
         return factory;
     }
 
-    public Instruction createInstruction(String className, List<String> parameters){
+    @Override
+    public Instruction createInstruction(String opcode, List<String> parameters){
         try {
+            String className = "sml.instruction." + opcode.substring(0,1).toUpperCase() +opcode.substring(1) + "Instruction";
             Constructor<?>[] constructors = Class.forName(className).getDeclaredConstructors();
             Class<?>[] parameterTypes = constructors[0].getParameterTypes();
             Object[] params = new Object[constructors[0].getParameterCount()];

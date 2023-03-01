@@ -1,6 +1,6 @@
 package sml;
 
-
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
@@ -21,11 +21,17 @@ public final class Translator {
 
     private final String fileName; // source file of SML code
 
+    private AbstractInstructionFactory factory;
+
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
 
     public Translator(String fileName) {
         this.fileName =  fileName;
+    }
+
+    public void setFactory(AbstractInstructionFactory factory) {
+        this.factory = factory;
     }
 
     // translate the small program in the file into lab (the labels) and
@@ -138,20 +144,22 @@ public final class Translator {
 
 
 
-            // TODO: Next, use dependency injection to allow this machine class
-            //       to work with different sets of opcodes (different CPUs)
-            // get BeanFactory
-            var factory = new ClassPathXmlApplicationContext("/beans.xml");
-            List<String> parameters = new ArrayList<>();
-            parameters.add(label);
-            while (!line.isEmpty()){
-                parameters.add(scan());
-                if (!Character.isWhitespace(line.charAt(0))){
-                    line = "";
-                }
+        // TODO: Next, use dependency injection to allow this machine class
+        //       to work with different sets of opcodes (different CPUs)
+        // get BeanFactory
+        if (this.factory == null){
+            ApplicationContext context = new ClassPathXmlApplicationContext("/beans2.xml");
+            this.setFactory((AbstractInstructionFactory) context.getBean("abstractInstructionFactory"));
+        }
+        List<String> parameters = new ArrayList<>();
+        parameters.add(label);
+        while (!line.isEmpty()) {
+            parameters.add(scan());
+            if (!Character.isWhitespace(line.charAt(0))) {
+                line = "";
             }
-
-            return (Instruction) factory.getBean(opcode, parameters.toArray());
+        }
+            return this.factory.getFactory().createInstruction(opcode, parameters);
 
 //            default -> {
 //                System.out.println("Unknown instruction: " + opcode);
