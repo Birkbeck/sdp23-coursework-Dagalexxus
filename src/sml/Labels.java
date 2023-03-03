@@ -14,6 +14,8 @@ import sml.exceptions.DuplicateLabelException;
  * Required in case of a jump instruction.
  *
  * @author Niklas Hassforther
+ * @version 1.0
+ * @since 1.0
  */
 public final class Labels {
 	private final Map<String, Integer> labels = new HashMap<>();

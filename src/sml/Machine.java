@@ -13,6 +13,8 @@ import static sml.Instruction.NORMAL_PROGRAM_COUNTER_UPDATE;
  * An instance contains 32 registers and methods to access and change them.
  *
  * @author Niklas Hassforther
+ * @version 1.0
+ * @since 1.0
  */
 public final class Machine {
 

@@ -4,6 +4,8 @@ package sml;
  * A class that holds the actual InstructionFactory implementation. Can hold any implementation of the InstructionFactory interface.
  *
  * @author Niklas Hassforther
+ * @version 1.0
+ * @since 1.0
  */
 public class AbstractInstructionFactory {
 

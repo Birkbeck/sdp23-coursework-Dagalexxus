@@ -6,6 +6,8 @@ import java.util.Objects;
  * Abstract class for arithmetic operations requiring the contents of two different registers
  *
  * @author Niklas Hassforther
+ * @version 1.0
+ * @since 1.0
  */
 public abstract class ArithmeticInstruction extends Instruction {
     protected final RegisterName source;
