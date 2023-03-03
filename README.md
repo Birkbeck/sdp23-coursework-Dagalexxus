@@ -24,7 +24,7 @@ amongst other skills.
 **Your userid**: nhassf01
 
 Please do not forget to complete this part as too often we have "orphaned" repositories,
-which can require months to sort out.
+which can require months to sort out. 
 
 ## The problem
 
