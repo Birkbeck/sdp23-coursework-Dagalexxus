@@ -3,6 +3,9 @@ package sml;
 import java.lang.reflect.Constructor;
 import java.util.List;
 
+/**
+ * Implements the InstructionFactory interface. Uses reflection in order to build the correct instruction as required.
+ */
 public class ReflectionInstructionFactory implements InstructionFactory {
 
     private static ReflectionInstructionFactory factory;
@@ -17,6 +20,11 @@ public class ReflectionInstructionFactory implements InstructionFactory {
         return factory;
     }
 
+     /**
+      * Creates and returns the instruction
+      * @param opcode - The operation code of the instruction
+      * @param parameters - The required parameters to instantiate a new instruction of the type provided in the opcode.
+      */
     @Override
     public Instruction createInstruction(String opcode, List<String> parameters){
         try {
