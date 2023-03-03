@@ -1,7 +1,6 @@
 package sml;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 public class Main {
 	/**
