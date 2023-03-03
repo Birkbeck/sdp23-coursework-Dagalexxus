@@ -73,7 +73,7 @@ public class ReflectionInstructionFactory implements InstructionFactory {
         } catch (InvocationTargetException e) {
             throw new RuntimeException("Error with the invocation target at: " + e);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Error as class with instruction can not be accessed at: " + e.getStackTrace().toString());
+            throw new RuntimeException("Error as class with instruction can not be accessed at: " + e);
         }
     }
 }
