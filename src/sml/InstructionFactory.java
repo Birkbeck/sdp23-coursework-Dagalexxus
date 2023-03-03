@@ -9,5 +9,5 @@ import java.util.List;
  * @author Niklas Hassforther
  */
 public interface InstructionFactory {
-    Instruction createInstruction(String opcode, List<String> parameters) throws InstantiationException, IllegalAccessException, InvocationTargetException;
+    Instruction createInstruction(String opcode, List<String> parameters);
 }

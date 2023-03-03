@@ -55,7 +55,7 @@ public final class Translator {
      * @param program - A list of instructions in executable form.
      * @throws IOException - thrown if the file provided is not readable.
      */
-    public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException {
         try (var sc = new Scanner(new File(fileName), StandardCharsets.UTF_8)) {
             labels.reset();
             program.clear();
@@ -84,7 +84,7 @@ public final class Translator {
      * The input line should consist of a single SML instruction,
      * with its label already removed.
      */
-    private Instruction getInstruction(String label) throws NumberFormatException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    private Instruction getInstruction(String label) throws NumberFormatException {
         if (line.isEmpty())
             return null;
 

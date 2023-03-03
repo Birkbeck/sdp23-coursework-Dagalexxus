@@ -15,36 +15,36 @@ public class ReflectionInstructionFactory implements InstructionFactory {
 
     private static ReflectionInstructionFactory factory;
 
-    private ReflectionInstructionFactory(){}
+    private ReflectionInstructionFactory() {
+    }
 
-    public static ReflectionInstructionFactory getFactory(){
-        if (factory == null){
+    public static ReflectionInstructionFactory getFactory() {
+        if (factory == null) {
             factory = new ReflectionInstructionFactory();
         }
 
         return factory;
     }
 
-     /**
-      * Creates and returns the instruction
-      * @param opcode - The operation code of the instruction
-      * @param parameters - The required parameters to instantiate a new instruction of the type provided in the opcode.
-      * @throws OpcodeNotFoundException - in case the class does not exist.
-      * @throws InstantiationException - in case the class can't be instantiated
-      * @throws IllegalAccessException - in case the class cannot be accessed through reflection
-      * @throws InvocationTargetException - in case there is an issue with the constructor.
-      */
+    /**
+     * Creates and returns the instruction
+     *
+     * @param opcode     - The operation code of the instruction
+     * @param parameters - The required parameters to instantiate a new instruction of the type provided in the opcode.
+     * @throws OpcodeNotFoundException   - in case the class does not exist.
+     * @throws RuntimeException - for various errors that are not recoverable.
+     */
     @Override
-    public Instruction createInstruction(String opcode, List<String> parameters) throws OpcodeNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException{
+    public Instruction createInstruction(String opcode, List<String> parameters) throws OpcodeNotFoundException{
         try {
-            String className = "sml.instruction." + opcode.substring(0,1).toUpperCase() +opcode.substring(1) + "Instruction";
+            String className = "sml.instruction." + opcode.substring(0, 1).toUpperCase() + opcode.substring(1) + "Instruction";
             Constructor<?>[] constructors = Class.forName(className).getDeclaredConstructors();
             Class<?>[] parameterTypes = constructors[0].getParameterTypes();
             Object[] params = new Object[constructors[0].getParameterCount()];
 
-            for (int n = 0; n < constructors[0].getParameterCount(); n++){
+            for (int n = 0; n < constructors[0].getParameterCount(); n++) {
                 String parameter = parameters.get(n);
-                if (parameter == null){
+                if (parameter == null) {
                     params[n] = null;
                     continue;
                 }
@@ -54,21 +54,24 @@ public class ReflectionInstructionFactory implements InstructionFactory {
                         .mapToObj(i -> (char) i)
                         .anyMatch(i -> !Character.isDigit(i));
 
-                if (parameterTypes[n].getName().equals("sml.RegisterName")){
+                if (parameterTypes[n].getName().equals("sml.RegisterName")) {
                     params[n] = Registers.Register.valueOf(parameter);
-                }
-                else if (!isNotNumber){
+                } else if (!isNotNumber) {
                     params[n] = Integer.parseInt(parameter);
-                }
-                else{
+                } else {
                     params[n] = parameter;
                 }
             }
 
             return (Instruction) constructors[0].newInstance(params);
-        }
-        catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             throw new OpcodeNotFoundException("Operation" + opcode + " does not exist.\nTerminating.");
+        } catch (InstantiationException e) {
+            throw new RuntimeException("Error creating the instruction at: " + e.getStackTrace().toString());
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException("Error with the invocation target at: " + e.getStackTrace().toString());
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Error as class with instruction can not be accessed at: " + e.getStackTrace().toString());
         }
     }
 }
