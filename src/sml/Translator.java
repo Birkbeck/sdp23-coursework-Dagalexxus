@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.lang.reflect.*;
 
 
 /**
@@ -165,7 +164,7 @@ public final class Translator {
         //       to work with different sets of opcodes (different CPUs)
         // get BeanFactory
         if (this.factory == null){
-            ApplicationContext context = new ClassPathXmlApplicationContext("/beans2.xml");
+            ApplicationContext context = new ClassPathXmlApplicationContext("/beans.xml");
             this.setFactory((AbstractInstructionFactory) context.getBean("abstractInstructionFactory"));
         }
         List<String> parameters = new ArrayList<>();
@@ -176,7 +175,7 @@ public final class Translator {
                 line = "";
             }
         }
-            return this.factory.getFactory().createInstruction(opcode, parameters);
+        return this.factory.getFactory().createInstruction(opcode, parameters);
 
 //            default -> {
 //                System.out.println("Unknown instruction: " + opcode);
