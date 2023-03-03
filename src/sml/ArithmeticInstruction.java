@@ -6,6 +6,8 @@ import java.util.Objects;
  * Abstract class for arithmetic operations requiring the contents of two different registers
  *
  * @author Niklas Hassforther
+ * @version 1.0
+ * @since 1.0
  */
 public abstract class ArithmeticInstruction extends Instruction {
     protected final RegisterName source;
@@ -15,12 +17,6 @@ public abstract class ArithmeticInstruction extends Instruction {
         super(label, opcode);
         this.source = source;
         this.result = result;
-    }
-
-    public ArithmeticInstruction(String label, String opcode, String result, String source) {
-        super(label, opcode);
-        this.result = Registers.Register.valueOf(result);
-        this.source = Registers.Register.valueOf(source);
     }
 
     protected RegisterName getResult() {

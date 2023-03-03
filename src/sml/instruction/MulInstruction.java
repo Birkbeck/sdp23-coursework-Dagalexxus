@@ -3,7 +3,7 @@ package sml.instruction;
 import sml.ArithmeticInstruction;
 import sml.Machine;
 import sml.RegisterName;
-import sml.Registers;
+
 
 import java.util.Objects;
 

@@ -3,22 +3,33 @@ package sml.instruction;
 import sml.Instruction;
 import sml.Machine;
 import sml.RegisterName;
-import sml.Registers;
 
 import java.util.Objects;
 
 // TODO: write a JavaDoc for the class
 
 /**
- * @author
+ * Represents the instruction to perform a jump if zero operation.
+ * @author Niklas Hassforther
+ * @version 1.0
+ * @since 1.0
  */
 
 public class JnzInstruction extends Instruction {
     private final RegisterName source;
     private final String jumpToLabel;
 
+    /**
+     * The operation code of the instruction.
+     */
     public final static String OP_CODE = "jnz";
 
+    /**
+     * Constructor method to instantiate a new instruction.
+     * @param label - the label of the instruction. Can be null.
+     * @param source - the register to check whether it is 0 or not.
+     * @param jumpToLabel - the label of the instruction to jump to if a jump is required.
+     */
     public JnzInstruction(String label, RegisterName source, String jumpToLabel){
         super(label, OP_CODE);
         this.source = source;
@@ -33,6 +44,11 @@ public class JnzInstruction extends Instruction {
         return jumpToLabel;
     }
 
+    /**
+     * Executes the instruction.
+     * @param m - The instance of the machine class on which the instruction is executed.
+     * @return If the operation does not need a jump the NORMAL_PROGRAM_COUNTER_UPDATE will be returned. Otherwise, the address of the new instruction is returned.
+     */
     @Override
     public int execute(Machine m){
         return (m.getRegisters().get(this.source) == 0)
