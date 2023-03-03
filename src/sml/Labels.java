@@ -38,7 +38,16 @@ public final class Labels {
 		// TODO: Where can NullPointerException be thrown here?
 		//       (Write an explanation.)
 		//       Add code to deal with non-existent labels.
-		return labels.get(label);
+		// If there is a non-existent label the method get() from the HashMap will return a null value.
+		// This means that the method returns a null value when it expects an int.
+		// The NullPointerException should be thrown at that moment.
+
+		if (labels.containsKey(label)) {
+			return labels.get(label);
+		}
+		else{
+			throw new NullPointerException("Label" + label + "does not exist in the program.");
+		}
 	}
 
 	/**

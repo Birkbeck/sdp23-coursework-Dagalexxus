@@ -52,4 +52,9 @@ public class TestLabels {
         other.addLabel("f5:", 5);
         Assertions.assertEquals(other.hashCode(), this.labels.hashCode());
     }
+
+    @Test
+    void exceptionTest(){
+        Assertions.assertThrows(NullPointerException.class, () -> labels.getAddress("f5:"));
+    }
 }
