@@ -30,4 +30,10 @@ public class TestLabels {
         String output = this.labels.toString();
         Assertions.assertEquals("[f4: -> 2, f5: -> 5]", output);
     }
+
+    @Test
+    void toStringTestEmpty(){
+        String output = this.labels.toString();
+        Assertions.assertEquals("[]", output);
+    }
 }

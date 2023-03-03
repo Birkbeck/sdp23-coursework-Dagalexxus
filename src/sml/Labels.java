@@ -52,6 +52,7 @@ public final class Labels {
 		// TODO: Implement the method using the Stream API (see also class Registers).
 		return this.labels.entrySet()
 				.stream()
+				.sorted(Map.Entry.comparingByValue())
 				.map(e -> e.getKey() + " -> " + e.getValue())
 				.collect(Collectors.joining(", ", "[", "]"));
 	}
