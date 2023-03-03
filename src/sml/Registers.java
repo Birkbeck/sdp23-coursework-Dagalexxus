@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 // TODO: write a JavaDoc for the class
 
 /**
+ * The class contains a set of registers to be used in the computation of a program written in SML.
+ * It has predefined registers (each implementing the RegisterName interface) that can hold integers to be used in computations.
  *
- * @author ...
+ * @author Niklas Hassforther
  */
 public final class Registers {
     private final Map<Register, Integer> registers = new HashMap<>();
