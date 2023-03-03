@@ -7,8 +7,10 @@ import java.util.Objects;
 // TODO: write a JavaDoc for the class
 
 /**
+ * Responsible for holding the labels of instructions for quick lookup of the related address in the program.
+ * Required in case of a jump instruction.
  *
- * @author ...
+ * @author Niklas Hassforther
  */
 public final class Labels {
 	private final Map<String, Integer> labels = new HashMap<>();

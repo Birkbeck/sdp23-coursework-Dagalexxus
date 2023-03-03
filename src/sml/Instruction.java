@@ -4,8 +4,9 @@ package sml;
 
 /**
  * Represents an abstract instruction.
+ * Represents the basis for an executable instruction. Any instruction to be used in SML will need to extend this (or a subclass of this) class.
  *
- * @author ...
+ * @author Niklas Hassforther
  */
 public abstract class Instruction {
 	protected final String label;

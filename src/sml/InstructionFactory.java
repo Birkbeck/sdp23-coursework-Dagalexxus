@@ -4,7 +4,9 @@ import java.util.List;
 
 /**
  * The interface for an InstructionFactory to be used in the Translator class.
+ *
+ * @author Niklas Hassforther
  */
 public interface InstructionFactory {
-    public Instruction createInstruction(String opcode, List<String> parameters);
+    Instruction createInstruction(String opcode, List<String> parameters);
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 /**
  * Implements the InstructionFactory interface. Uses reflection in order to build the correct instruction as required.
+ *
+ * @author Niklas Hassforther
  */
 public class ReflectionInstructionFactory implements InstructionFactory {
 
