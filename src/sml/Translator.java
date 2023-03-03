@@ -84,7 +84,7 @@ public final class Translator {
                 String r = scan();
                 String s = scan();
                 return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
-        }
+            }
 
             // TODO: add code for all other types of instructions
             case SubInstruction.OP_CODE ->  {
@@ -111,7 +111,8 @@ public final class Translator {
                 try {
                     val = Integer.parseInt(scan());
                     return new MovInstruction(label, Register.valueOf(r), val);
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e) {
                     throw new NumberFormatException("MovInstruction requires an integer value as second argument.");
                 }
             }
