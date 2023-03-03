@@ -23,6 +23,7 @@ public final class Labels {
 	 *
 	 * @param label the label
 	 * @param address the address the label refers to
+	 * @throws DuplicateLabelException in case the label is already contained.
 	 */
 	public void addLabel(String label, int address) {
 		Objects.requireNonNull(label);
