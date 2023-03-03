@@ -4,10 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import sml.Labels;
-import sml.Machine;
-import sml.Registers;
-
-import java.io.PrintStream;
 
 public class TestLabels {
 
