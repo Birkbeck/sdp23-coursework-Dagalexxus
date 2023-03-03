@@ -7,7 +7,10 @@ package sml;
  * Represents the basis for an executable instruction. Any instruction to be used in SML will need to extend this (or a subclass of this) class.
  *
  * @author Niklas Hassforther
+ * @version 1.0
+ * @since 1.0
  */
+
 public abstract class Instruction {
 	protected final String label;
 	protected final String opcode;

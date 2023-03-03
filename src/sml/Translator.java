@@ -12,6 +12,8 @@ import java.util.*;
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  *
  * @author Niklas Hassforther
+ * @version 1.0
+ * @since 1.0
  */
 public final class Translator {
 

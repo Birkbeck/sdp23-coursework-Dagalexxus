@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
  * It has predefined registers (each implementing the RegisterName interface) that can hold integers to be used in computations.
  *
  * @author Niklas Hassforther
+ * @version 1.0
+ * @since 1.0
  */
 public final class Registers {
     private final Map<Register, Integer> registers = new HashMap<>();
