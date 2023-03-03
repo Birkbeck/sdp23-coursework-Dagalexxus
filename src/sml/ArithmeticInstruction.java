@@ -2,6 +2,11 @@ package sml;
 
 import java.util.Objects;
 
+/**
+ * Abstract class for arithmetic operations requiring the contents of two different registers
+ *
+ * @author Niklas Hassforther
+ */
 public abstract class ArithmeticInstruction extends Instruction {
     protected final RegisterName source;
     protected final RegisterName result;

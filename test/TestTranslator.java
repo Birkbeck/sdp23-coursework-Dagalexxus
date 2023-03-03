@@ -34,9 +34,7 @@ public class TestTranslator {
         catch (IOException e){
             Assertions.assertEquals(1,0);
         }
-
         machine.execute();
-
         Assertions.assertEquals(720, this.machine.getRegisters().get(Registers.Register.valueOf("EBX")));
     }
 }

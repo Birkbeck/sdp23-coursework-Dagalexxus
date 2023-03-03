@@ -11,7 +11,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="junit" level="project" />
-    <orderEntry type="library" name="spring-beans-6.0.4" level="project" />
-    <orderEntry type="library" name="spring-context-6.0.4" level="project" />
+    <orderEntry type="library" name="springframework.spring" level="project" />
+    <orderEntry type="library" name="6.0" level="project" />
   </component>
 </module>
