@@ -1,11 +1,7 @@
 package sml;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -21,8 +17,6 @@ public final class Translator {
 
     private final String fileName; // source file of SML code
 
-    private AbstractInstructionFactory factory;
-
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
 
@@ -35,19 +29,10 @@ public final class Translator {
         this.fileName =  fileName;
     }
 
-    /**
-     * Setter method to add the factory that provides the instructions.
-     *
-     * @param factory - The abstract factory that will provide the required instructions.
-     */
-    public void setFactory(AbstractInstructionFactory factory) {
-        this.factory = factory;
-    }
 
     // translate the small program in the file into lab (the labels) and
     // prog (the program)
     // return "no errors were detected"
-
     /**
      * This method reads the file for new instructions and translates them into an executable program
      *
@@ -90,84 +75,7 @@ public final class Translator {
 
         String opcode = scan();
 
-//        switch (opcode) {
-//            case AddInstruction.OP_CODE -> {
-//                String r = scan();
-//                String s = scan();
-//                return new AddInstruction(label, Register.valueOf(r), Register.valueOf(s));
-//            }
-
-            // TODO: add code for all other types of instructions
-//            case SubInstruction.OP_CODE ->  {
-//                String r = scan();
-//                String s = scan();
-//                return new SubInstruction(label, Register.valueOf(r), Register.valueOf(s));
-//            }
-//
-//            case MulInstruction.OP_CODE -> {
-//                String r = scan();
-//                String s = scan();
-//                return new MulInstruction(label, Register.valueOf(r), Register.valueOf(s));
-//            }
-//
-//            case DivInstruction.OP_CODE -> {
-//                String r = scan();
-//                String s = scan();
-//                return new DivInstruction(label, Register.valueOf(r), Register.valueOf(s));
-//            }
-//
-//            case MovInstruction.OP_CODE -> {
-//                String r = scan();
-//                int val;
-//                try {
-//                    val = Integer.parseInt(scan());
-//                    return new MovInstruction(label, Register.valueOf(r), val);
-//                } catch (NumberFormatException e) {
-//                    throw new NumberFormatException("MovInstruction requires an integer value as second argument.");
-//                }
-//            }
-//
-//            case OutInstruction.OP_CODE ->{
-//                    String s = scan();
-//                    return new OutInstruction(label, Register.valueOf(s));
-//            }
-//
-//            case JnzInstruction.OP_CODE -> {
-//                String s = scan();
-//                String jumpTo = scan();
-//                return new JnzInstruction(label, Register.valueOf(s), jumpTo);
-//            }
-
-            // TODO: Then, replace the switch by using the Reflection API
-            /*String className = "sml.instruction." + opcode.substring(0,1).toUpperCase() +opcode.substring(1) + "Instruction";
-
-            try {
-                Constructor<?>[] constructors = Class.forName(className).getDeclaredConstructors();
-                List<String> parameters = new ArrayList<>();
-                parameters.add(label);
-                for (int n = 1; n < constructors[0].getParameterCount(); n++){
-                    String argument = scan();
-                    parameters.add(argument);
-                }
-                ReflectionInstructionFactory factory = ReflectionInstructionFactory.getFactory();
-                return factory.createInstruction(className, parameters);
-            }
-            catch (ClassNotFoundException e){
-                System.out.println(e);
-            }
-            catch (Exception e){
-                System.out.println(e);
-            }*/
-
-
-
-        // TODO: Next, use dependency injection to allow this machine class
-        //       to work with different sets of opcodes (different CPUs)
-        // get BeanFactory
-        if (this.factory == null){
-            ApplicationContext context = new ClassPathXmlApplicationContext("/beans.xml");
-            this.setFactory((AbstractInstructionFactory) context.getBean("abstractInstructionFactory"));
-        }
+        // TODO: Then, replace the switch by using the Reflection API
         List<String> parameters = new ArrayList<>();
         parameters.add(label);
         while (!line.isEmpty()) {
@@ -176,14 +84,8 @@ public final class Translator {
                 line = "";
             }
         }
-
-        return this.factory.getFactory().createInstruction(opcode, parameters);
-
-
-//            default -> {
-//                System.out.println("Unknown instruction: " + opcode);
-//            }
-//        }
+        ReflectionInstructionFactory factory = ReflectionInstructionFactory.getFactory();
+        return factory.createInstruction(opcode, parameters);
     }
 
     /**

@@ -1,9 +1,6 @@
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sml.Instruction;
-import sml.InstructionFactory;
 import sml.ReflectionInstructionFactory;
 import sml.Registers;
 import sml.exceptions.OpcodeNotFoundException;
@@ -15,7 +12,7 @@ import java.util.List;
 
 
 public class TestReflectionInstructionFactory {
-    InstructionFactory factory = ReflectionInstructionFactory.getFactory();
+    ReflectionInstructionFactory factory = ReflectionInstructionFactory.getFactory();
 
     @Test
     void ValidTest(){

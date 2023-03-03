@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Niklas Hassforther
  */
-public class ReflectionInstructionFactory implements InstructionFactory {
+public class ReflectionInstructionFactory{
 
     private static ReflectionInstructionFactory factory;
 
@@ -34,7 +34,6 @@ public class ReflectionInstructionFactory implements InstructionFactory {
      * @throws OpcodeNotFoundException   - in case the class does not exist.
      * @throws RuntimeException - for various errors that are not recoverable.
      */
-    @Override
     public Instruction createInstruction(String opcode, List<String> parameters) throws OpcodeNotFoundException{
         try {
             String className = "sml.instruction." + opcode.substring(0, 1).toUpperCase() + opcode.substring(1) + "Instruction";
