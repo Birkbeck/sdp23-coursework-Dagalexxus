@@ -11,11 +11,11 @@ import java.lang.reflect.*;
 
 
 /**
- * This class ....
+ * This class
  * <p>
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
  *
- * @author ...
+ * @author Niklas Hassforther
  */
 public final class Translator {
 
@@ -26,10 +26,20 @@ public final class Translator {
     // line contains the characters in the current line that's not been processed yet
     private String line = "";
 
+    /**
+     * Constructor to instantiate a new Translator object
+     *
+     * @param fileName - The name of the file in which the program to translate is stored
+     */
     public Translator(String fileName) {
         this.fileName =  fileName;
     }
 
+    /**
+     * Setter method to add the factory that provides the instructions.
+     *
+     * @param factory - The abstract factory that will provide the required instructions.
+     */
     public void setFactory(AbstractInstructionFactory factory) {
         this.factory = factory;
     }
@@ -38,6 +48,13 @@ public final class Translator {
     // prog (the program)
     // return "no errors were detected"
 
+    /**
+     * This method reads the file for new instructions and translates them into an executable program
+     *
+     * @param labels - the colleciton of the labels defined in the
+     * @param program - A list of instructions in executable form.
+     * @throws IOException - thrown if the file provided is not readable.
+     */
     public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException {
         try (var sc = new Scanner(new File(fileName), StandardCharsets.UTF_8)) {
             labels.reset();
@@ -167,7 +184,11 @@ public final class Translator {
 //        }
     }
 
-
+    /**
+     * Scans the input line to check whether the instruction has a label or not.
+     *
+     * @return - if there is a label the label is returned otherwise it is null
+     */
     private String getLabel() {
         String word = scan();
         if (word.endsWith(":"))
