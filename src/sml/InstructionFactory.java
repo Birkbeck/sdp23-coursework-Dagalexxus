@@ -1,5 +1,6 @@
 package sml;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -8,5 +9,5 @@ import java.util.List;
  * @author Niklas Hassforther
  */
 public interface InstructionFactory {
-    Instruction createInstruction(String opcode, List<String> parameters);
+    Instruction createInstruction(String opcode, List<String> parameters) throws InstantiationException, IllegalAccessException, InvocationTargetException;
 }

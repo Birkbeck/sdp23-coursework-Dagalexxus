@@ -32,11 +32,6 @@ public class AddInstruction extends ArithmeticInstruction {
 		super(label, OP_CODE, result, source);
 	}
 
-	public AddInstruction(String label, String result, String source){
-		super(label, OP_CODE, result, source);
-	}
-
-
 	/**
 	 * Executes the instruction.
 	 * @param m - The instance of the machine class on which the instruction is executed.

@@ -30,7 +30,7 @@ public class MovInstructionTest {
     @Test
     void executeValid(){
         registers.set(EAX, 2);
-        Instruction instruction = new MovInstruction(null, "EAX", "5");
+        Instruction instruction = new MovInstruction(null, EAX, 5);
         instruction.execute(machine);
         Assertions.assertEquals(5, registers.get(EAX));
     }

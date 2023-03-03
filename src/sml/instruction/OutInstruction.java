@@ -17,11 +17,6 @@ public class OutInstruction extends Instruction {
         this.source = source;
     }
 
-    public OutInstruction(String label, String source) {
-        super(label, OP_CODE);
-        this.source = Registers.Register.valueOf(source);
-    }
-
     @Override
     public int execute(Machine m){
         System.out.println(m.getRegisters().get(source));

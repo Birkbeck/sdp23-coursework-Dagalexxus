@@ -1,6 +1,7 @@
 package sml;
 
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 public class Main {
 	/**
@@ -31,5 +32,12 @@ public class Main {
 		catch (IOException e) {
 			System.out.println("Error reading the program from " + args[0]);
 		}
+		catch (InstantiationException e){
+			System.out.println("Error creating the instruction at: " + e.getStackTrace().toString());
+		}
+		catch (InvocationTargetException e){
+			System.out.println("Error with the invocation target at: " + e.getStackTrace().toString());
+		}
+		catch (IllegalAccessException)
 	}
 }

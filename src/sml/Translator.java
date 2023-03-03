@@ -5,6 +5,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -50,11 +51,11 @@ public final class Translator {
     /**
      * This method reads the file for new instructions and translates them into an executable program
      *
-     * @param labels - the colleciton of the labels defined in the
+     * @param labels - the collection of the labels defined in the
      * @param program - A list of instructions in executable form.
      * @throws IOException - thrown if the file provided is not readable.
      */
-    public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException {
+    public void readAndTranslate(Labels labels, List<Instruction> program) throws IOException, InvocationTargetException, InstantiationException, IllegalAccessException {
         try (var sc = new Scanner(new File(fileName), StandardCharsets.UTF_8)) {
             labels.reset();
             program.clear();
@@ -83,7 +84,7 @@ public final class Translator {
      * The input line should consist of a single SML instruction,
      * with its label already removed.
      */
-    private Instruction getInstruction(String label) throws NumberFormatException {
+    private Instruction getInstruction(String label) throws NumberFormatException, InvocationTargetException, InstantiationException, IllegalAccessException {
         if (line.isEmpty())
             return null;
 
@@ -175,7 +176,9 @@ public final class Translator {
                 line = "";
             }
         }
+
         return this.factory.getFactory().createInstruction(opcode, parameters);
+
 
 //            default -> {
 //                System.out.println("Unknown instruction: " + opcode);

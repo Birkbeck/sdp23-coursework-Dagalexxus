@@ -25,12 +25,6 @@ public class JnzInstruction extends Instruction {
         this.jumpToLabel = jumpToLabel;
     }
 
-    public JnzInstruction(String label, String source, String jumpToLabel){
-        super(label, OP_CODE);
-        this.source = Registers.Register.valueOf(source);
-        this.jumpToLabel = jumpToLabel;
-    }
-
     public RegisterName getSource() {
         return source;
     }

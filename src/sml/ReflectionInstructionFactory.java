@@ -1,6 +1,9 @@
 package sml;
 
+import sml.exceptions.OpcodeNotFoundException;
+
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -26,9 +29,13 @@ public class ReflectionInstructionFactory implements InstructionFactory {
       * Creates and returns the instruction
       * @param opcode - The operation code of the instruction
       * @param parameters - The required parameters to instantiate a new instruction of the type provided in the opcode.
+      * @throws OpcodeNotFoundException - in case the class does not exist.
+      * @throws InstantiationException - in case the class can't be instantiated
+      * @throws IllegalAccessException - in case the class cannot be accessed through reflection
+      * @throws InvocationTargetException - in case there is an issue with the constructor.
       */
     @Override
-    public Instruction createInstruction(String opcode, List<String> parameters){
+    public Instruction createInstruction(String opcode, List<String> parameters) throws OpcodeNotFoundException, InstantiationException, IllegalAccessException, InvocationTargetException{
         try {
             String className = "sml.instruction." + opcode.substring(0,1).toUpperCase() +opcode.substring(1) + "Instruction";
             Constructor<?>[] constructors = Class.forName(className).getDeclaredConstructors();
@@ -60,13 +67,8 @@ public class ReflectionInstructionFactory implements InstructionFactory {
 
             return (Instruction) constructors[0].newInstance(params);
         }
-        catch (ClassNotFoundException e){
-            System.out.println(e);
+        catch (ClassNotFoundException e) {
+            throw new OpcodeNotFoundException("Operation" + opcode + " does not exist.\nTerminating.");
         }
-        catch (Exception e){
-            System.out.println(e);
-        }
-        return null;
     }
-
 }
