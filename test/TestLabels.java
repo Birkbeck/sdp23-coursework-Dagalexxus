@@ -32,4 +32,24 @@ public class TestLabels {
         String output = this.labels.toString();
         Assertions.assertEquals("[]", output);
     }
+
+    @Test
+    void equalsTest(){
+        this.labels.addLabel("f4:", 2);
+        this.labels.addLabel("f5:", 5);
+        Labels other = new Labels();
+        other.addLabel("f4:", 2);
+        other.addLabel("f5:", 5);
+        Assertions.assertEquals(other, this.labels);
+    }
+
+    @Test
+    void hashCodeTest(){
+        this.labels.addLabel("f4:", 2);
+        this.labels.addLabel("f5:", 5);
+        Labels other = new Labels();
+        other.addLabel("f4:", 2);
+        other.addLabel("f5:", 5);
+        Assertions.assertEquals(other.hashCode(), this.labels.hashCode());
+    }
 }
