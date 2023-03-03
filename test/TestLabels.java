@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import sml.Labels;
+import sml.exceptions.DuplicateLabelException;
 
 public class TestLabels {
 
@@ -54,7 +55,13 @@ public class TestLabels {
     }
 
     @Test
-    void exceptionTest(){
+    void NullPointerExceptionTest(){
         Assertions.assertThrows(NullPointerException.class, () -> labels.getAddress("f5:"));
+    }
+
+    @Test
+    void customExceptionTest(){
+        this.labels.addLabel("f3", 1);
+        Assertions.assertThrows(DuplicateLabelException.class, () -> this.labels.addLabel("f3", 1));
     }
 }

@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import sml.exceptions.DuplicateLabelException;
+
 // TODO: write a JavaDoc for the class
 
 /**
@@ -25,7 +27,12 @@ public final class Labels {
 	public void addLabel(String label, int address) {
 		Objects.requireNonNull(label);
 		// TODO: Add a check that there are no label duplicates.
-		labels.put(label, address);
+		if (this.labels.containsKey(label)){
+			throw new DuplicateLabelException("Label " + label + " already in use.");
+		}
+		else {
+			labels.put(label, address);
+		}
 	}
 
 	/**
@@ -33,6 +40,7 @@ public final class Labels {
 	 *
 	 * @param label the label
 	 * @return the address the label refers to
+	 * @throws NullPointerException in case the label does not exist.
 	 */
 	public int getAddress(String label) {
 		// TODO: Where can NullPointerException be thrown here?
