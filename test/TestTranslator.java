@@ -3,11 +3,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import sml.Translator;
-import sml.Machine;
-import sml.Registers;
+import sml.*;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 public class TestTranslator {
     private Translator translator;
@@ -36,5 +35,30 @@ public class TestTranslator {
         }
         machine.execute();
         Assertions.assertEquals(720, this.machine.getRegisters().get(Registers.Register.valueOf("EBX")));
+    }
+
+    @Test
+    void TestDependencyInjection(){
+        this.translator = new Translator("test1.sml");
+        try {
+            this.translator.readAndTranslate(this.machine.getLabels(), this.machine.getProgram());
+        }
+        // make the test fail when an exception is thrown
+        catch (IOException e){
+            Assertions.assertEquals(1,0);
+        }
+        machine.execute();
+        try {
+            Field privatefield = Translator.class.getDeclaredField("factory");
+            privatefield.setAccessible(true);
+            AbstractInstructionFactory factory = (AbstractInstructionFactory) privatefield.get(this.translator);
+            privatefield = AbstractInstructionFactory.class.getDeclaredField("factory");
+            privatefield.setAccessible(true);
+            InstructionFactory factory1 = (InstructionFactory) privatefield.get(factory);
+            Assertions.assertTrue(factory1 instanceof ReflectionInstructionFactory);
+        }
+        catch (Exception e){
+            Assertions.assertEquals(1,2);
+        }
     }
 }

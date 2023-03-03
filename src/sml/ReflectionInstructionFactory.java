@@ -69,9 +69,9 @@ public class ReflectionInstructionFactory implements InstructionFactory {
         } catch (ClassNotFoundException e) {
             throw new OpcodeNotFoundException("Operation" + opcode + " does not exist.\nTerminating.");
         } catch (InstantiationException e) {
-            throw new RuntimeException("Error creating the instruction at: " + e.getStackTrace().toString());
+            throw new RuntimeException("Error creating the instruction at: " + e);
         } catch (InvocationTargetException e) {
-            throw new RuntimeException("Error with the invocation target at: " + e.getStackTrace().toString());
+            throw new RuntimeException("Error with the invocation target at: " + e);
         } catch (IllegalAccessException e) {
             throw new RuntimeException("Error as class with instruction can not be accessed at: " + e.getStackTrace().toString());
         }
